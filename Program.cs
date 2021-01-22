@@ -75,7 +75,7 @@ namespace UserMenu
 
             for (int i = 1; i <= members; i++)
             {
-                int age = UserInt("Please enter the age of this person in your party: ");
+                int age = UserInt($"Please enter the age of person {i.ToString()}: ");
 
                 if (age > 5 && age < 20)
                 {
