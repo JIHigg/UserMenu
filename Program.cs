@@ -15,30 +15,7 @@ namespace UserMenu
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        Console.WriteLine("Welcome to the Cinema!");
-                        int members = UserInt("How many are in your party?");
-                        List<int> Ages = new List<int>();
-                        int totalPrice = 0;
-
-                        for(int i = 0; i <=members; i++)
-                        {
-                            int age = UserInt("Please enter the age of this person in your party: ");
-                            Ages.Add(age);
-                            if (age > 20) ;
-                            else if (age > 100 || age < 5) { }
-                            if (age > 64) { }
-                            else totalPrice += 80;
-                        }
-                        
-                      
-                        
-
-
-
-
-
-
-                        //Add a case for Menu option 1
+                        TicketSales();
                         //Check age and calculate ticket prices
                         //Display group size and cost of tickets
                         break;
@@ -62,11 +39,83 @@ namespace UserMenu
 
                 }
             } while (true);
-
-            
-
         }
 
+
+        //Main Menu
+            private static void MenuOptions()
+        {
+            Console.WriteLine("Welcome to the Main Menu! Please make a selection: ");
+            Console.WriteLine("1. Purchase tickets");
+            Console.WriteLine("2. Word Multiplier");
+            Console.WriteLine("3. Word Extracter");
+            Console.WriteLine("4. Exit");
+        }
+        
+        //Method for switch one
+        private static void TicketSales()
+        {
+            int members = UserInt("How many are in your party?");
+            List<string> Ages = new List<string>();
+            int totalPrice = 0;
+            int ungdom = 0;
+            int pension = 0;
+            int standard = 0;
+            string ungPris = "Ungdompris SEK 80 ";
+            string pensionPris = "Pensionpris SEK 90";
+            string standardPris = "Standardpris SEK 120";
+
+
+
+            Console.WriteLine("Welcome to the Cinema!");
+            Console.WriteLine($"Tickets\n------------------" +
+                $"\n{ungPris}\n{standardPris}\n{pensionPris}" +
+                "\nChildren under 5 and Adults over 100 free");
+
+
+            for (int i = 1; i <= members; i++)
+            {
+                int age = UserInt("Please enter the age of this person in your party: ");
+
+                if (age > 5 && age < 20)
+                {
+                    ungdom++;
+                    totalPrice += 80;
+                }
+                else if (age >= 20 && age <= 64)
+                {
+                    totalPrice += 120;
+                    standard++;
+                }
+                else if (age > 64 && age < 100)
+                {
+                    pension++;
+                    totalPrice += 90;
+                }
+            }
+            Console.WriteLine("\n-----------------------------");
+            Console.WriteLine($"{ungPris}: {ungdom}");
+            Console.WriteLine($"{standardPris}: {standard}");
+            Console.WriteLine($"{pensionPris}: {pension}");
+            Console.WriteLine($"Total tickets: {members}  Total cost: {totalPrice}:-\n");
+        }
+
+
+        //Method for switch two
+        private static void RepeatInputSameLine()
+        {
+            Console.WriteLine("\nLet's play a game!");
+            Console.WriteLine("Give me any word and I'll repeat it ten times: ");
+            string message = Console.ReadLine();
+            Console.WriteLine("My turn: ");
+            for (int i = 10; i > 0; i--)
+            {
+                Console.Write(message + " ");
+            }
+            Console.WriteLine("\n ");
+        }
+
+        //Method for switch 3
         private static void ExtractThirdWord()
         {
             bool success = false;
@@ -88,19 +137,7 @@ namespace UserMenu
             Console.WriteLine($"Here is your third word: {words[2]}\n");
         }
 
-        private static void RepeatInputSameLine()
-        {
-            Console.WriteLine("\nLet's play a game!");
-            Console.WriteLine("Tell me anything and I'll repeat it ten times: ");
-            string message = Console.ReadLine();
-            Console.WriteLine("My turn: ");
-            for (int i = 10; i > 0; i--)
-            {
-                Console.Write(message + " ");
-            }
-            Console.WriteLine("\n ");
-        }
-
+        //Returns user input as string, prompts again for bad entry.
         private static string UserAnswer(string prompt)
         {
             string input;
@@ -122,6 +159,7 @@ namespace UserMenu
              return input;
         }
 
+        //Returns user input as int, prompts again for bad entry.
         private static int UserInt(string prompt)
         {
             int number;
@@ -138,19 +176,5 @@ namespace UserMenu
             return number;
         }
 
-            private static void MenuOptions()
-        {
-            Console.WriteLine("Welcome to the Main Menu! Please make a selection: ");
-            Console.WriteLine("1. Purchase tickets");
-            Console.WriteLine("2. Word Multiplier");
-            Console.WriteLine("3. Word Extracter");
-            Console.WriteLine("4. Exit");
-        }
-
-        public enum TicketPrices
-        {
-            Ungdom, Pension, Standard
-        }
-        
     }
 }
