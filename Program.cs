@@ -55,7 +55,6 @@ namespace UserMenu
         //Method for switch one
         private static void TicketSales()
         {
-            int members = UserInt("How many are in your party?");
             List<string> Ages = new List<string>();
             int totalPrice = 0;
             int ungdom = 0;
@@ -68,16 +67,16 @@ namespace UserMenu
 
 
             Console.WriteLine("Welcome to the Cinema!");
-            Console.WriteLine($"Tickets\n------------------" +
-                $"\n{ungPris}\n{standardPris}\n{pensionPris}" +
-                "\nChildren under 5 and Adults over 100 free");
+            DisplayPrices(ungPris, pensionPris, standardPris);
+            int members = UserInt("How many are in your party?");
 
 
             for (int i = 1; i <= members; i++)
             {
+                DisplayPrices(ungPris, pensionPris, standardPris);
                 int age = UserInt($"Please enter the age of person {i.ToString()}: ");
 
-                if (age > 5 && age < 20)
+                if (age >= 5 && age < 20)
                 {
                     ungdom++;
                     totalPrice += 80;
@@ -87,7 +86,7 @@ namespace UserMenu
                     totalPrice += 120;
                     standard++;
                 }
-                else if (age > 64 && age < 100)
+                else if (age > 64 && age <= 100)
                 {
                     pension++;
                     totalPrice += 90;
@@ -98,6 +97,21 @@ namespace UserMenu
             Console.WriteLine($"{standardPris}: {standard}");
             Console.WriteLine($"{pensionPris}: {pension}");
             Console.WriteLine($"Total tickets: {members}  Total cost: {totalPrice}:-\n");
+            AnyKeyContinue();
+        }
+        //Returns back to Main Meny
+        private static void AnyKeyContinue()
+        {
+            Console.WriteLine("Press any key to return to menu:");
+            Console.ReadKey();
+            Console.WriteLine();
+        }
+        //Ticket Price dispay for Meny 1
+        private static void DisplayPrices(string ungPris, string pensionPris, string standardPris)
+        {
+            Console.WriteLine($"\nTickets\n------------------" +
+                $"\n{ungPris}\n{standardPris}\n{pensionPris}" +
+                "\nChildren under 5 and Adults over 100 free");
         }
 
 
@@ -113,6 +127,7 @@ namespace UserMenu
                 Console.Write(message + " ");
             }
             Console.WriteLine("\n ");
+            AnyKeyContinue();
         }
 
         //Method for switch 3
@@ -135,6 +150,7 @@ namespace UserMenu
 
             Console.WriteLine("\nLet me pull out the third word from your phrase.");
             Console.WriteLine($"Here is your third word: {words[2]}\n");
+            AnyKeyContinue();
         }
 
         //Returns user input as string, prompts again for bad entry.
